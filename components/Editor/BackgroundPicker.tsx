@@ -15,6 +15,17 @@ const PRESET_COLORS = [
   "#ffffff",
 ];
 
+const PRESET_GRADIENTS = [
+  { from: "#6366f1", to: "#ec4899", dir: 135, label: "Violeta Rosa" },
+  { from: "#0ea5e9", to: "#22d3ee", dir: 135, label: "Ocean" },
+  { from: "#f97316", to: "#eab308", dir: 135, label: "Sunset" },
+  { from: "#10b981", to: "#06b6d4", dir: 135, label: "Emerald" },
+  { from: "#8b5cf6", to: "#6366f1", dir: 135, label: "Purple" },
+  { from: "#ef4444", to: "#f97316", dir: 135, label: "Fire" },
+  { from: "#1e1e1e", to: "#434343", dir: 180, label: "Dark" },
+  { from: "#667eea", to: "#764ba2", dir: 135, label: "Cosmic" },
+];
+
 interface BackgroundPickerProps {
   state: Pick<
     MockupState,
@@ -75,6 +86,29 @@ export function BackgroundPicker({ state, onChange }: BackgroundPickerProps) {
         </TabsContent>
 
         <TabsContent value="gradient" className="space-y-3 mt-3">
+          <div className="grid grid-cols-4 gap-1.5">
+            {PRESET_GRADIENTS.map((g) => (
+              <button
+                key={g.label}
+                title={g.label}
+                onClick={() =>
+                  onChange({
+                    gradientFrom: g.from,
+                    gradientTo: g.to,
+                    gradientDirection: g.dir,
+                  })
+                }
+                className={`h-7 rounded-md border-2 transition-transform hover:scale-105 ${
+                  state.gradientFrom === g.from && state.gradientTo === g.to
+                    ? "border-primary scale-105"
+                    : "border-transparent"
+                }`}
+                style={{
+                  background: `linear-gradient(${g.dir}deg, ${g.from}, ${g.to})`,
+                }}
+              />
+            ))}
+          </div>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5">
               <input

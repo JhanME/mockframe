@@ -3,7 +3,7 @@ import { DeviceFrameProps } from "@/types/mockup";
 export function AndroidPixel({ imageSrc, className }: DeviceFrameProps) {
   return (
     <div
-      className={`bg-[#1A1A1A] rounded-[40px] p-[12px] shadow-2xl relative ${className ?? ""}`}
+      className={`bg-[#1A1A1A] rounded-[40px] p-[12px] shadow-2xl relative max-w-[320px] ${className ?? ""}`}
     >
       {/* Power button */}
       <div className="absolute -right-[3px] top-[100px] w-[3px] h-[50px] bg-[#2D2D2D] rounded-r" />

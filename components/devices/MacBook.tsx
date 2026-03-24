@@ -2,7 +2,7 @@ import { DeviceFrameProps } from "@/types/mockup";
 
 export function MacBook({ imageSrc, className }: DeviceFrameProps) {
   return (
-    <div className={`flex flex-col items-center ${className ?? ""}`}>
+    <div className={`flex flex-col items-center max-w-[720px] ${className ?? ""}`}>
       {/* Screen */}
       <div className="bg-[#2D2D2D] rounded-t-xl p-[12px] pt-[28px] relative shadow-2xl">
         {/* Camera notch */}
