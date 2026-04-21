@@ -1,24 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MockFrame — Device Mockup Generator
 
+![MockFrame Demo](./app/mockframe-demo.png)
 
+Genera imágenes de presentación profesionales colocando tus capturas de pantalla dentro de marcos de dispositivos reales — navegador Safari, MacBook, iPhone 15 y Android Pixel — con fondos personalizados, transformaciones 3D y exportación en alta resolución.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-black?style=flat-square)
+![html-to-image](https://img.shields.io/badge/html--to--image-export-F97316?style=flat-square)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Características
 
-## Learn More
+- **4 dispositivos** — Safari Browser, MacBook, iPhone 15, Android Pixel
+- **Capas múltiples** — añade, reordena y posiciona dispositivos en el mismo canvas
+- **Drag & drop** — mueve cada dispositivo libremente sobre el canvas
+- **Transformaciones 3D** — controla escala, rotación en X/Y/Z y perspectiva
+- **Fondo personalizable** — color sólido o gradiente con presets y selector de dirección
+- **Sombra adaptativa** — sombra oscura en fondos claros, clara en fondos oscuros, con control de intensidad
+- **Exportación PNG / SVG** a 3× de resolución (pixel-perfect para presentaciones y redes sociales)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Inicio rápido
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Requiere Node.js >= 18.17.0
+npm install
+npm run dev
+```
 
-## Deploy on Vercel
+Abre [http://localhost:3000](http://localhost:3000).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Uso
+
+1. **Añade un dispositivo** desde el panel lateral (Safari, MacBook, iPhone, Android).
+2. **Sube una imagen** haciendo clic en el área del dispositivo.
+3. **Ajusta posición** arrastrando el dispositivo en el canvas, o con los controles de rotación y escala.
+4. **Elige un fondo** — sólido, gradiente con presets o colores personalizados.
+5. **Regula la sombra** con el slider de intensidad.
+6. **Exporta** en PNG o SVG con el botón de la barra lateral.
+
+---
+
+## Stack
+
+| Tecnología | Uso |
+|---|---|
+| Next.js 14 (App Router) | Framework principal |
+| React 18 | UI y estado |
+| TypeScript 5 | Tipado |
+| Tailwind CSS 3 | Estilos |
+| shadcn/ui + Radix UI | Componentes (Slider, Tabs) |
+| html-to-image | Exportación canvas → PNG/SVG |
+| lucide-react | Iconos |
+
+---
+
+## Licencia
+
+MIT
