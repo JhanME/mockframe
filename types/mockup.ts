@@ -35,6 +35,7 @@ export interface MockupState {
   gradientDirection: number;
   canvasWidth: number;
   canvasHeight: number;
+  shadowIntensity: number;
 }
 
 export interface DeviceFrameProps {

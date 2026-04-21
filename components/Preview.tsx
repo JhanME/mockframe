@@ -3,6 +3,7 @@
 import { forwardRef, useCallback, useRef, useState } from "react";
 import { MockupState } from "@/types/mockup";
 import { DEVICE_COMPONENTS } from "@/components/devices";
+import { isLightBackground } from "@/lib/utils";
 
 interface PreviewProps {
   state: MockupState;
@@ -16,6 +17,16 @@ export const Preview = forwardRef<HTMLDivElement, PreviewProps>(
       state.backgroundType === "gradient"
         ? `linear-gradient(${state.gradientDirection}deg, ${state.gradientFrom}, ${state.gradientTo})`
         : state.backgroundColor;
+
+    const lightBg = isLightBackground(state.backgroundType, {
+      color: state.backgroundColor,
+      from: state.gradientFrom,
+      to: state.gradientTo,
+    });
+    const intensity = state.shadowIntensity;
+    const shadow = lightBg
+      ? `drop-shadow(0 24px 48px rgba(0,0,0,${intensity}))`
+      : `drop-shadow(0 24px 48px rgba(255,255,255,${intensity * 0.5}))`;
 
     const [dragging, setDragging] = useState<string | null>(null);
     const dragStart = useRef<{ x: number; y: number; layerX: number; layerY: number } | null>(null);
@@ -94,11 +105,13 @@ export const Preview = forwardRef<HTMLDivElement, PreviewProps>(
                 onMouseDown={(e) => handleMouseDown(e, layer.id, layer.x, layer.y)}
               >
                 {layer.image ? (
-                  <DeviceComponent
-                    imageSrc={layer.image}
-                    browserTheme={layer.browserTheme}
-                    browserUrl={layer.browserUrl}
-                  />
+                  <div style={{ filter: shadow }}>
+                    <DeviceComponent
+                      imageSrc={layer.image}
+                      browserTheme={layer.browserTheme}
+                      browserUrl={layer.browserUrl}
+                    />
+                  </div>
                 ) : (
                   <div className="w-[400px] h-[280px] rounded-xl bg-white/10 border-2 border-dashed border-white/20 flex items-center justify-center">
                     <span className="text-white/40 text-xs">Sin imagen</span>

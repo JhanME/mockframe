@@ -1,14 +1,13 @@
 "use client";
 
 import { useRef, useState, useCallback } from "react";
-import { Plus, Monitor, Laptop, Smartphone, ChevronDown } from "lucide-react";
-import { MockupState, DeviceLayer, DeviceType, ScenePresetId } from "@/types/mockup";
-import { SCENE_PRESETS } from "@/lib/presets";
+import { Plus, Monitor, Laptop, Smartphone } from "lucide-react";
+import { MockupState, DeviceLayer, DeviceType } from "@/types/mockup";
 import { BackgroundPicker } from "@/components/Editor/BackgroundPicker";
 import { ExportButton } from "@/components/Editor/ExportButton";
-import { ScenePresetSelector } from "@/components/Editor/ScenePresetSelector";
 import { LayerPanel } from "@/components/Editor/LayerPanel";
 import { Preview } from "@/components/Preview";
+import { Slider } from "@/components/ui/slider";
 
 let nextId = 1;
 function createLayer(device: DeviceType, overrides?: Partial<DeviceLayer>): DeviceLayer {
@@ -40,6 +39,7 @@ const INITIAL_STATE: MockupState = {
   gradientDirection: 180,
   canvasWidth: 900,
   canvasHeight: 600,
+  shadowIntensity: 0.5,
 };
 
 export default function Home() {
@@ -48,8 +48,6 @@ export default function Home() {
   const [expandedLayerId, setExpandedLayerId] = useState<string | null>(
     INITIAL_STATE.layers[0]?.id ?? null
   );
-  const [showScenes, setShowScenes] = useState(false);
-
   const update = useCallback(
     (partial: Partial<MockupState>) =>
       setState((prev) => ({ ...prev, ...partial })),
@@ -98,30 +96,6 @@ export default function Home() {
     []
   );
 
-  const applyPreset = useCallback((presetId: ScenePresetId) => {
-    const preset = SCENE_PRESETS.find((p) => p.id === presetId);
-    if (!preset) return;
-
-    nextId = 1;
-    const layers = preset.layers.map((l, i) =>
-      createLayer(l.device, { ...l, zIndex: i + 1 })
-    );
-
-    setState({
-      layers,
-      selectedLayerId: layers[0]?.id ?? null,
-      canvasWidth: preset.canvasWidth,
-      canvasHeight: preset.canvasHeight,
-      padding: preset.padding,
-      backgroundType: preset.background.type,
-      backgroundColor: preset.background.color ?? "#000000",
-      gradientFrom: preset.background.from ?? "#6366f1",
-      gradientTo: preset.background.to ?? "#ec4899",
-      gradientDirection: preset.background.direction ?? 135,
-    });
-    setExpandedLayerId(layers[0]?.id ?? null);
-  }, []);
-
   const handleLayerMove = useCallback(
     (layerId: string, x: number, y: number) => updateLayer(layerId, { x, y }),
     [updateLayer]
@@ -142,25 +116,6 @@ export default function Home() {
       <div className="flex flex-col md:flex-row">
         {/* Sidebar */}
         <aside className="w-full md:w-[340px] border-r border-border p-5 space-y-6 overflow-y-auto md:h-[calc(100vh-73px)]">
-          {/* Scene presets */}
-          <section>
-            <button
-              onClick={() => setShowScenes((v) => !v)}
-              className="flex items-center justify-between w-full text-sm font-semibold mb-2"
-            >
-              Escenas
-              <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${showScenes ? "rotate-180" : ""}`} />
-            </button>
-            <div
-              className="grid transition-all duration-300 ease-in-out"
-              style={{ gridTemplateRows: showScenes ? "1fr" : "0fr" }}
-            >
-              <div className="overflow-hidden">
-                <ScenePresetSelector onApply={applyPreset} />
-              </div>
-            </div>
-          </section>
-
           {/* Layers */}
           <section>
             <h2 className="text-sm font-semibold mb-2">Dispositivos</h2>
@@ -210,6 +165,23 @@ export default function Home() {
           <section>
             <h2 className="text-sm font-semibold mb-2">Fondo</h2>
             <BackgroundPicker state={state} onChange={update} />
+          </section>
+
+          {/* Shadow */}
+          <section>
+            <h2 className="text-sm font-semibold mb-2">Sombra</h2>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                Intensidad: {Math.round(state.shadowIntensity * 100)}%
+              </label>
+              <Slider
+                value={[state.shadowIntensity * 100]}
+                onValueChange={([v]) => update({ shadowIntensity: v / 100 })}
+                min={0}
+                max={100}
+                step={1}
+              />
+            </div>
           </section>
 
           {/* Export */}
